@@ -39,7 +39,7 @@ def restart_camera(cam: PySpin.CameraPtr):
         print("Camera stopped")
 
 
-def get_frame_info(cam: PySpin.CameraPtr):
+def get_frame_info(cam: PySpin.CameraPtr, plot=False):
     # Ensure the camera is not acquiring
     restart_camera(cam)
     configure_trigger(cam, "software")
@@ -58,7 +58,11 @@ def get_frame_info(cam: PySpin.CameraPtr):
             width = image_result.GetWidth()
             height = image_result.GetHeight()
             print(f"Captured image size: {width}x{height}")
+            if plot:
+                image_data = image_result.GetNDArray()
+                return width, height, image_data
             return width, height
+
     finally:
         # Always ensure to end acquisition to reset the camera state
         cam.EndAcquisition()

@@ -11,6 +11,7 @@ ipykernel = "^6.29.2"
 opencv-python = "^4.9.0.80"
 spinnaker_python = { file = "./modules/PySpin/spinnaker_python-4.0.0.116-cp310-cp310-win_amd64.whl" }
 toml = "^0.10.2"
+pillow = "^10.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^3.0.3"

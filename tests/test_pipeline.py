@@ -3,18 +3,21 @@ import PySpin
 from nvuelab.utils import camera, video, clocks
 import time
 import cv2 as cv
+from PIL import Image, ImageTk
 
 # %%
 recording_fps = 20
 
 # %%
 system, cam = camera.init()
-FRAME_WIDTH, FRAME_HEIGHT = camera.get_frame_info(cam)
+FRAME_WIDTH, FRAME_HEIGHT, image_data = camera.get_frame_info(cam, True)
 
 video_writer = video.video_writer_init(
     "test.mp4", recording_fps, FRAME_WIDTH, FRAME_HEIGHT
 )
+# %%
 
+image = Image.fromarray(cv.cvtColor(image_data, cv.COLOR_BGR2RGB))
 # %%
 # recording
 
