@@ -8,7 +8,7 @@ def show(img):
 
 
 def video_writer_init(filename, fps, frame_width, frame_height):
-    fourcc = cv.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv.VideoWriter_fourcc(*"avc1")  # H.264 codec
     return cv.VideoWriter(filename, fourcc, fps, (frame_width, frame_height), False)
 
 
