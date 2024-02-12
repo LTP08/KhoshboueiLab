@@ -93,8 +93,11 @@ def init_camera():
 def display_first_frame():
     global cam, video_label, FRAME_HEIGHT, FRAME_WIDTH
     FRAME_WIDTH, FRAME_HEIGHT, image_data = camera.get_frame_info(cam, plot=True)
+    FRAME_WIDTH = 1920
+    FRAME_HEIGHT = 1080
     if image_data is not None and image_data.size > 0:
-        image = Image.fromarray(cv.cvtColor(image_data, cv.COLOR_BGR2RGB))
+        resized_image = cv.resize(image_data, (FRAME_WIDTH, FRAME_HEIGHT))
+        image = Image.fromarray(cv.cvtColor(resized_image, cv.COLOR_BGR2RGB))
         photo = ImageTk.PhotoImage(image=image)
         if video_label is None:
             video_label = tk.Label(root, image=photo)
@@ -122,9 +125,10 @@ def camera_acquisition():
                     )
                 else:
                     image_data = image_result.GetNDArray()
-                    image_queue.put(image_data)
+                    resized_image = cv.resize(image_data, (FRAME_WIDTH, FRAME_HEIGHT))
+                    image_queue.put(resized_image)
                     if video_writer is not None:
-                        video.save_video(video_writer, image_data)
+                        video.save_video(video_writer, resized_image)
             else:
                 break  # Exit loop if the camera stops streaming
 
